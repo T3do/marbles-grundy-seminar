@@ -6,7 +6,7 @@ B. Marbles
 time limit per test0.5 seconds
 memory limit per test1024 megabytes
 Using marbles as a currency didn't go so well in Cubicônia. In an attempt to make it up to his friends after stealing their marbles, the Emperor decided to invite them to a game night in his palace.
-
+https://github.com/T3do/marbles-grundy-seminar/blob/main/README.md
 Of course, the game uses marbles, since the Emperor needs to find some use for so many of them. N
  marbles are scattered in a board whose lines are numbered from 0
  through L
@@ -29,11 +29,11 @@ Note that more than one marble can occupy the same position on the board.
 
 As the Emperor doesn't like to lose, you should help him determine which games he should attend. Also, as expected, the Emperor always take the first turn when playing. Assuming both players act optimally, you are given the initial distribution of the marbles, and should find if it is possible for the Emperor to win if he chooses to play.
 
-Input
+Input  
 The first line contains an integer N (1≤N≤1000). 
 Each of the following N rows contains two integers li and ci indicating on which row and column the i-th marble is in (1≤li,ci≤100).
 
-Output
+Output  
 Your program should print a single line containing the character Y if it is possible for the Emperor to win the game or N otherwise.
 
 Examples:
