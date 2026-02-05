@@ -3,16 +3,16 @@ using namespace std;
 
 // Solve "Marbles" impartial game via Sprague–Grundy DP on (l,c) with moves:
 // (l-u,c), (l,c-u), (l-u,c-u), u>0, staying inside board.
-// Overall position is xor of Grundy numbers of each marble.
+// Overall result is xor of Grundy numbers of each marble.
 
 int main() {
     int N;
     cin >> N;
 
-    const int MAX = 100;                 // given li, ci <= 100
+    const int MAX = 100;          // given li, ci <= 100
     int g[MAX + 1][MAX + 1];      // Grundy table
 
-    // mex helper: use timestamp array to avoid clearing each time
+    // mex helper
     // Grundy values on a 101x101 board are small; 512 is large enough.
     const int LIM = 512;
     static int seen[LIM];
@@ -56,13 +56,6 @@ int main() {
         int l, c;
         cin >> l >> c;
         xorsum ^= g[l][c];
-    }
-
-    for (int i = 0; i <= 20; ++i) {
-        for (int j = 0; j <= 20; ++j) {
-            cout << g[i][j] << " "; 
-        }
-        cout << endl;
     }
 
     cout << (xorsum ? 'Y' : 'N') << "\n";
