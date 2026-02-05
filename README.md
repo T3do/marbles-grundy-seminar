@@ -1,7 +1,7 @@
 # Seminar Imaprtial Game Theory
 
 ## Problem
-link : https://codeforces.com/problemset/gymProblem/101908/B
+link : https://codeforces.com/problemset/gymProblem/101908/B  
 B. Marbles
 time limit per test0.5 seconds
 memory limit per test1024 megabytes
@@ -37,18 +37,18 @@ Output
 Your program should print a single line containing the character Y if it is possible for the Emperor to win the game or N otherwise.
 
 Examples:
-E1.
-2
-1 3
-2 3
+E1.  
+2  
+1 3  
+2 3  
 
-Y
+Y  
 
-E2.
-1
-1 2
+E2.  
+1  
+1 2  
 
-N
+N  
 
 ## Idea
 - Model as impartial game
