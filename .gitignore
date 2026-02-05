@@ -1,0 +1,6 @@
+*.exe
+*.out
+solve
+build/
+*.o
+.DS_Store
