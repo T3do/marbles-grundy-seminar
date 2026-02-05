@@ -1,6 +1,7 @@
 # Seminar Imaprtial Game Theory
 
 ## Problem
+link : https://codeforces.com/problemset/gymProblem/101908/B
 B. Marbles
 time limit per test0.5 seconds
 memory limit per test1024 megabytes
