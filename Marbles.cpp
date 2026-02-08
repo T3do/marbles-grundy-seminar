@@ -1,50 +1,55 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Solve "Marbles" impartial game via Sprague–Grundy DP on (l,c) with moves:
-// (l-u,c), (l,c-u), (l-u,c-u), u>0, staying inside board.
-// Overall result is xor of Grundy numbers of each marble.
-
 int main() {
+
     int N;
     cin >> N;
 
-    const int MAX = 100;          // given li, ci <= 100
-    int g[MAX + 1][MAX + 1];      // Grundy table
+    const int MAX = 100;              // given li, ci <= 100
+    const int INF = 1'000'000'000;    // "insta-win" marker
+    static int g[MAX + 1][MAX + 1];
 
     // mex helper
-    // Grundy values on a 101x101 board are small; 512 is large enough.
-    const int LIM = 512;
+    // mex values on this board stay small; 1024 is large enough.
+    const int LIM = 1024;
     static int seen[LIM];
     int stamp = 1;
 
-    // Compute Grundy for all (l,c) from (0,0) to (100,100)
-    for (int l = 0; l <= MAX; ++l) {
-        for (int c = 0; c <= MAX; ++c) {
-            if (l == 0 && c == 0) {
-                g[l][c] = 0;
-                continue;
-            }
+    // Mark insta-win cells: (i,0), (0,i), (i,i), and (0,0)
+    g[0][0] = INF;
+    for (int i = 1; i <= MAX; ++i) {
+        g[i][0] = INF;
+        g[0][i] = INF;
+        g[i][i] = INF;
+    }
 
-            ++stamp; // new mex marking session so that it does not interfere with past cells
+    // Precompute g[l][c] for all other cells (l != c, l,c >= 1)
+    for (int l = 1; l <= MAX; ++l) {
+        for (int c = 1; c <= MAX; ++c) {
+            if (l == c) continue; // already INF
 
-            // Moves: (l-u, c)
-            for (int u = 1; u <= l; ++u) {
-                int val = g[l - u][c];
-                if (val < LIM) seen[val] = stamp;
-            }
-            // Moves: (l, c-u)
-            for (int u = 1; u <= c; ++u) {
-                int val = g[l][c - u];
-                if (val < LIM) seen[val] = stamp;
-            }
-            // Moves: (l-u, c-u)
-            for (int u = 1; u <= min(l, c); ++u) {
-                int val = g[l - u][c - u];
+            ++stamp;
+
+            // Reachable by decreasing l: (l-u, c) => all rows < l in same column
+            for (int i = 0; i < l; ++i) {
+                int val = g[i][c];
                 if (val < LIM) seen[val] = stamp;
             }
 
-            // mex
+            // Reachable by decreasing c: (l, c-u) => all cols < c in same row
+            for (int j = 0; j < c; ++j) {
+                int val = g[l][j];
+                if (val < LIM) seen[val] = stamp;
+            }
+
+            // Reachable by decreasing both equally: (l-u, c-u)
+            int m = min(l, c);
+            for (int t = 1; t <= m; ++t) {
+                int val = g[l - t][c - t];
+                if (val < LIM) seen[val] = stamp;
+            }
+
             int mex = 0;
             while (mex < LIM && seen[mex] == stamp) ++mex;
             g[l][c] = mex;
@@ -55,6 +60,12 @@ int main() {
     for (int i = 0; i < N; ++i) {
         int l, c;
         cin >> l >> c;
+
+        // If any marble starts on an insta-win cell, first player wins immediately.
+        if (g[l][c] == INF) {
+            cout << "Y\n";
+            return 0;
+        }
         xorsum ^= g[l][c];
     }
 
